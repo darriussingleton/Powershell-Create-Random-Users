@@ -1,0 +1,27 @@
+import python
+# —-- Edit these variables for your own use case—--#
+$PASSWORD_FOR_USERS  = "Password1"
+$NUMBER_OF_ACCOUNTS_TO_CREATE = 100
+#-----------------------------------------------------------------#
+
+Function generate-random-names([int]$nameLength = $(Get-Random -Minimum 3 -Maximum 7)) {
+    $consonants = @('b','c','d','f','g','h','j','k','l','m','n','p','q','r','s','t','v','w','x','z')
+    $vowels = @('a','e','i','o','u','y')
+    $name = ""
+
+    for ($i = 0; $i -lt $nameLength; $i++) {
+        if ($i % 2 -eq 0) {
+            $name += $consonants[(Get-Random -Maximum $consonants.Count)]
+        } else {
+            $name += $vowels[(Get-Random -Maximum $vowels.Count)]
+        }
+    }
+    return $name
+}
+
+for ($i = 0; $i -lt $NUMBER_OF_ACCOUNTS_TO_CREATE; $i++) {
+    $username = generate-random-names()
+    Write-Host "Creating account for user: $username with password: $($PASSWORD_FOR_USERS)"
+    # In a real scenario, you would call a function here to create the account
+    # Example: Create-UserAccount -Username $username -Password $PASSWORD_FOR_USERS
+}
